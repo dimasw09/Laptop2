@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Laptop Second</title>
+    <style>
+        /* Gaya CSS yang sama untuk tabel */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Daftar Laptop Second</h1>
+
+    <div class="loading" id="loading">Loading...</div>
+
+    <table id="laptop-table">
+        <thead>
+            <tr>
+                <th>Tipe Laptop</th>
+                <th>Spesifikasi</th>
+                <th>Harga</th>
+                <th>Supplier</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan dimasukkan di sini oleh JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch data dari Google Spreadsheet
+        async function fetchLaptopData() {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwpFz5zhY7CQm2VtT-p0_v2Z1H_Ru-lU8XAHI0He9VDtHJmo-D19oAJThS_9c7_flEY/exec');
+            const laptops = await response.json();
+            
+            const tableBody = document.querySelector('#laptop-table tbody');
+            tableBody.innerHTML = ''; // Clear existing data
+
+            laptops.forEach(laptop => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${laptop.type}</td>
+                    <td>${laptop.specs}</td>
+                    <td>${laptop.price}</td>
+                    <td>${laptop.supplier}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Panggil fungsi untuk memuat data saat halaman dibuka
+        window.onload = fetchLaptopData;
+    </script>
+
+</body>
+</html>
